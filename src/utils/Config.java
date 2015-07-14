@@ -44,6 +44,10 @@ public final class Config {
 		return NumberUtils.parseLong(getString(name));
 	}
 
+	private boolean getBool(final String name) {
+		return NumberUtils.parseBool(getString(name));
+	}
+
 	private String[] getStringArray(final String name) {
 		return parseStringArray(getString(name));
 	}
@@ -72,6 +76,10 @@ public final class Config {
 
 	public final long getSomeLong() {
 		return getLong("SOME_LONG");
+	}
+
+	public final boolean getSomeBool() {
+		return getBool("SOME_BOOL");
 	}
 
 	public final long[] getLongArray() {

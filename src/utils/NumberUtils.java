@@ -56,6 +56,10 @@ public final class NumberUtils {
 		return decimalNumber.replace(VIRGULA, PONTO);
 	}
 
+	public static boolean parseBool(String str) {
+		return Boolean.parseBoolean(str);
+	}
+
 	public static long[] parseLongArray(String[] stringArray) {
 		if (stringArray == null) {
 			return null;

@@ -3,7 +3,7 @@ package utils;
 import java.lang.reflect.Field;
 
 /**
- * @author Cris Stanza, 10-Jul-2015
+ * @author Cris Stanza, 10-Jul-2015.
  */
 public class IntrospectionUtils {
 

@@ -50,10 +50,11 @@ public final class JaxbUtils {
 	 * @throws Exception
 	 *             Lança exce&ccedil;&atilde;o no caso de qualquer tipo de erro.
 	 */
-	public static Object unmarshal(String xml, Class<?> clazz) throws Exception {
+	@SuppressWarnings("unchecked")
+	public static <T> T unmarshal(String xml, Class<T> clazz) throws Exception {
 		JAXBContext jaxb = JAXBContext.newInstance(clazz);
 		Unmarshaller unmarshaller = jaxb.createUnmarshaller();
-		return unmarshaller.unmarshal(new StringReader(xml));
+		return (T) unmarshaller.unmarshal(new StringReader(xml));
 	}
 
 	/**
@@ -74,7 +75,7 @@ public final class JaxbUtils {
 	 *             <code>false</code> ou se a exce&ccedil;&atilde;o ocorrida n&atilde;o for do tipo
 	 *             <code>javax.xml.bind.UnmarshalException</code>.
 	 */
-	public static Object unmarshal(String xml, Class<?> clazz, boolean silent) throws Exception {
+	public static <T> T unmarshal(String xml, Class<T> clazz, boolean silent) throws Exception {
 		try {
 			return JaxbUtils.unmarshal(xml, clazz);
 		} catch (UnmarshalException exc) {
