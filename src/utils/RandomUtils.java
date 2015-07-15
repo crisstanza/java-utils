@@ -5,15 +5,14 @@ import java.util.Random;
 /**
  * Classe auxiliar para gerar dados aleat&oacute;rios.
  *
- * @author cneves, 14-Jul-2015
+ * @author Cris Stanza, 14-Jul-2015
  */
 public final class RandomUtils {
 
-	private static final int MAX_RANDOM_CAPTALIZED_STRING_SIZE = 10;
+	private static final Random random = new Random();
 
 	private static final int MIN_RANDOM_CAPTALIZED_STRING_SIZE = 4;
-
-	private static final Random random = new Random();
+	private static final int MAX_RANDOM_CAPTALIZED_STRING_SIZE = 10;
 
 	private static final int ONE = 1;
 
@@ -54,6 +53,14 @@ public final class RandomUtils {
 
 	public static double randomDouble() {
 		return random.nextDouble();
+	}
+
+	public static float randomFloat() {
+		return random.nextFloat();
+	}
+
+	public static long randomLong() {
+		return random.nextLong();
 	}
 
 }
