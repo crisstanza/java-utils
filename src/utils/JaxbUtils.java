@@ -36,7 +36,7 @@ public final class JaxbUtils {
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 		StringWriter result = new StringWriter();
 		marshaller.marshal(obj, result);
-		return result.toString();
+		return result.toString().trim();
 	}
 
 	/**
