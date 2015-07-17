@@ -131,6 +131,10 @@ public final class IntrospectionUtils {
 		return java.util.List.class.getName().equals(type.getName());
 	}
 
+	public static boolean isJavaUtilDate(Class<?> type) {
+		return java.util.Date.class.getName().equals(type.getName());
+	}
+
 	// ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/**
@@ -196,6 +200,8 @@ public final class IntrospectionUtils {
 				} else {
 					return setRandomValues(implClass, customImplResolver);
 				}
+			} else if (isJavaUtilDate(type)) {
+				return type.newInstance();
 			} else {
 				Object newObject = type.newInstance();
 				return setRandomValues(newObject, customImplResolver);
@@ -231,7 +237,7 @@ public final class IntrospectionUtils {
 	 * @see br.com.agrolog.integracao.util.IntrospectionUtils
 	 * @see br.com.agrolog.integracao.util.IntrospectionUtils.InterfaceImplResolver
 	 * 
-	 * @author Cris Stanza, 15-Jul-2015.
+	 * @author cneves, 15-Jul-2015.
 	 */
 	private static class DefaultInterfaceImplResolver {
 
@@ -255,7 +261,7 @@ public final class IntrospectionUtils {
 	/**
 	 * Interface a ser implementada para defini&ccedil;&atilde;o da classe concreta que implementa uma determinada interface.
 	 * 
-	 * @author Cris Stanza, 15-Jul-2015.
+	 * @author cneves, 15-Jul-2015.
 	 */
 	public static interface InterfaceImplResolver {
 
