@@ -124,7 +124,7 @@ public final class IntrospectionUtils {
 	}
 
 	public static boolean canBeConsideredPrimitive(Class<?> type) {
-		return isJavaLangDoubleOrPrimitive(type) || isJavaLangFloatOrPrimitive(type) || isJavaLangIntegerOrPrimitive(type) || isJavaLangLongOrPrimitive(type) || isJavaLangString(type);
+		return isJavaLangDoubleOrPrimitive(type) || isJavaLangFloatOrPrimitive(type) || isJavaLangIntegerOrPrimitive(type) || isJavaLangLongOrPrimitive(type) || isJavaLangString(type) || isJavaUtilDate(type);
 	}
 
 	public static boolean isJavaUtilList(Class<?> type) {
