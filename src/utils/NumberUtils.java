@@ -84,4 +84,8 @@ public final class NumberUtils {
 		}
 	}
 
+	public static float parseFloat(Double value) {
+		return value == null ? null : value.floatValue();
+	}
+
 }
