@@ -140,8 +140,16 @@ public final class IntrospectionUtils {
 		return javax.xml.datatype.XMLGregorianCalendar.class.getName().equals(type.getName());
 	}
 
+	public static boolean isList(Class<?> type) {
+		return isJavaUtilList(type) || isJavaUtilArrayList(type);
+	}
+
 	public static boolean isJavaUtilList(Class<?> type) {
 		return java.util.List.class.getName().equals(type.getName());
+	}
+
+	public static boolean isJavaUtilArrayList(Class<?> type) {
+		return java.util.ArrayList.class.getName().equals(type.getName());
 	}
 
 	public static boolean isJavaUtilDate(Class<?> type) {
@@ -176,12 +184,14 @@ public final class IntrospectionUtils {
 	public static Object setRandomValues(Object obj, InterfaceImplResolver customImplResolver) {
 		try {
 			Class<?> clazz = obj.getClass();
-			for (Field field : clazz.getDeclaredFields()) {
-				field.setAccessible(true);
-				if (!Modifier.isFinal(field.getModifiers())) {
-					field.set(obj, randomValue(field, customImplResolver));
+			if (!isList(clazz)) {
+				for (Field field : clazz.getDeclaredFields()) {
+					field.setAccessible(true);
+					if (!Modifier.isFinal(field.getModifiers())) {
+						field.set(obj, randomValue(field, customImplResolver));
+					}
+					field.setAccessible(false);
 				}
-				field.setAccessible(false);
 			}
 			return obj;
 		} catch (Exception exc) {
