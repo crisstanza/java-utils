@@ -5,7 +5,10 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import javax.xml.datatype.DatatypeFactory;
 
 /**
  * @author Cris Stanza, 10-Jul-2015.
@@ -79,6 +82,8 @@ public final class IntrospectionUtils {
 						}
 					}
 					sb.append("]");
+				} else {
+					sb.append(toString(field.get(obj)));
 				}
 				sb.append(i < fields.length - 1 ? " " : "");
 				field.setAccessible(false);
@@ -124,7 +129,15 @@ public final class IntrospectionUtils {
 	}
 
 	public static boolean canBeConsideredPrimitive(Class<?> type) {
-		return isJavaLangDoubleOrPrimitive(type) || isJavaLangFloatOrPrimitive(type) || isJavaLangIntegerOrPrimitive(type) || isJavaLangLongOrPrimitive(type) || isJavaLangString(type) || isJavaUtilDate(type);
+		return isJavaLangDoubleOrPrimitive(type) || isJavaLangFloatOrPrimitive(type) || isJavaLangIntegerOrPrimitive(type) || isJavaLangLongOrPrimitive(type) || isJavaLangString(type) || isDate(type);
+	}
+
+	private static boolean isDate(Class<?> type) {
+		return isJavaUtilDate(type) || isJavaxXmlDatatypeXMLGregorianCalendar(type);
+	}
+
+	public static boolean isJavaxXmlDatatypeXMLGregorianCalendar(Class<?> type) {
+		return javax.xml.datatype.XMLGregorianCalendar.class.getName().equals(type.getName());
 	}
 
 	public static boolean isJavaUtilList(Class<?> type) {
@@ -172,6 +185,7 @@ public final class IntrospectionUtils {
 			}
 			return obj;
 		} catch (Exception exc) {
+			exc.printStackTrace();
 			throw new RuntimeException(exc);
 		}
 	}
@@ -197,6 +211,13 @@ public final class IntrospectionUtils {
 				Object newObject = implClass.newInstance();
 				if (isJavaUtilList(type)) {
 					return randomValue((List<Object>) newObject, field, customImplResolver);
+				} else {
+					return setRandomValues(implClass, customImplResolver);
+				}
+			} else if (Modifier.isAbstract(type.getModifiers())) {
+				Class<?> implClass = defaultImplResolver.resolve(type, customImplResolver);
+				if (isJavaxXmlDatatypeXMLGregorianCalendar(type)) {
+					return DatatypeFactory.newInstance().newXMLGregorianCalendar(new GregorianCalendar());
 				} else {
 					return setRandomValues(implClass, customImplResolver);
 				}
