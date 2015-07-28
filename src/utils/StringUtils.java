@@ -56,4 +56,56 @@ public final class StringUtils {
 		return sb.toString();
 	}
 
+	/**
+	 * Corrige o separador decimal de uma <code>String</code>. Exemplo:<br />
+	 * - entrada: -97,06 32,83, -97,06 32,83<br />
+	 * - sa&iacute;da: -97.06 32.83, -97.06 32.83
+	 * 
+	 * @param str
+	 *            <code>String</code> utilizando v&iacute;rgula como separador decimal.
+	 * @return <code>String</code> utilizando ponto como separador decimal.
+	 */
+	public static String fixComma(String str) {
+		int strLength = str.length();
+		char[] result = new char[strLength];
+		int iComma = 0;
+		for (int i = 0; i < strLength; i++) {
+			char charAt = str.charAt(i);
+			if (charAt == ',') {
+				result[i] = iComma % 3 == 2 ? ',' : '.';
+				iComma++;
+			} else {
+				result[i] = charAt;
+			}
+		}
+		return new String(result);
+	}
+
+	public static String fixQuote(String str) {
+		return str.replace('\'', '"');
+	}
+
+	/**
+	 * Um <code>java.lang.StringBuilder</code> que sempre adiciona uma quebra de linha a cada chamada ao seu método
+	 * <code>.append()</code>.
+	 * 
+	 * @author cneves, 24-Jul-2015
+	 */
+	public static class StringLinesBuilder {
+		private final StringBuilder sb = new StringBuilder();
+
+		public void append(Object obj) {
+			sb.append(obj).append(System.lineSeparator());
+		}
+
+		public String toString() {
+			return sb.toString().trim();
+		}
+
+		public int length() {
+			return sb.length();
+		}
+
+	}
+
 }
