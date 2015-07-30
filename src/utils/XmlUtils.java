@@ -2,13 +2,22 @@ package utils;
 
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Classe auxiliar para executar opera&ccedil;&otilde;es com XML.
@@ -50,4 +59,36 @@ public final class XmlUtils {
 		String newXml = xmlOutput.getWriter().toString();
 		return newXml.replaceFirst(XML_DECLARATION_WITH_NO_NEW_LINE, XML_DECLARATION_WITH_NEW_LINE);
 	}
+
+	public static Element getDocumentElement(String path) throws Exception {
+		final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		final DocumentBuilder builder = factory.newDocumentBuilder();
+		return builder.parse(path).getDocumentElement();
+	}
+
+	public static List<Node> getChildNodes(Node node) {
+		final NodeList children = node.getChildNodes();
+		final int length = children.getLength();
+		List<Node> data = new ArrayList<Node>();
+		for (int i = 0; i < length; i++) {
+			final Node row = children.item(i);
+			if (row.getNodeType() == Node.ELEMENT_NODE) {
+				data.add(row);
+			}
+		}
+		return data;
+	}
+
+	public static Node getAttribute(Node node, String name) {
+		final NamedNodeMap attributes = node.getAttributes();
+		final int length = attributes.getLength();
+		for (int i = 0; i < length; i++) {
+			final Node attribute = attributes.item(i);
+			if (attribute.getNodeName().equals(name)) {
+				return attribute;
+			}
+		}
+		return null;
+	}
+
 }
