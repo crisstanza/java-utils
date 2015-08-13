@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * @author cneves, 13-Ago-2015
+ * @author Cris Stanza, 13-Ago-2015
  */
 public final class FileSystemUtil {
 

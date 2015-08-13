@@ -16,7 +16,7 @@ import javax.json.JsonValue;
 import javax.json.JsonValue.ValueType;
 
 /**
- * @author cneves, 12-Ago-2015
+ * @author Cris Stanza, 12-Ago-2015
  */
 public final class JsonUtil {
 
